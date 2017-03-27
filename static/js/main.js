@@ -458,6 +458,7 @@ app.router({ default: '/' }, [
   ['/about', require('./pages/aboutView.js')],
   ['/impact', require('./pages/impactView.js')],
   ['/more', require('./pages/issuesView.js')],
+  ['/faq', require('./pages/faqView.js')],
 ]);
 
 const tree = app.start();
