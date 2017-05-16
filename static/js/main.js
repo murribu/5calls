@@ -270,11 +270,7 @@ app.model({
         lng = geo.split(",")[1];
       }
       if (lat && lng){
-        events = Object.values(events).map(function(val){ return val }); // Convert Object to Array
-        events = events.map(townHallUtils.mapDistanceAndDistrict(lat, lng));
-        events = events.filter(townHallUtils.filterEvents(state.divisions));
-        events = events.sort(townHallUtils.sortEvents)
-        //events = townHallUtils.filterForLocalEvents(events, state.divisions, lat, lng);
+        events = townHallUtils.filterForLocalEvents(events, state.divisions, lat, lng);
         // Only return (at most) the first three. Showing more than that could be overwhelming.
         return {
           localEvents: events.slice(0,3)
