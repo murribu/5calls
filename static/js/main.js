@@ -260,7 +260,11 @@ app.model({
     hideFieldOfficeNumbers: () => ({ showFieldOfficeNumbers: false }),
     setCacheDate: (state, data) => ({ [data]: Date.now() }),
     receiveTownHallData: (state, data) => {
-      let events = JSON.parse(data);
+      let eventsObj = JSON.parse(data);
+      let eventsArr = [];
+      for (let e in eventsObj) {
+        eventsArr.push(eventsObj[e]);
+      }
       let lat = false;
       let lng = false;
       if (cachedGeo != ''){
@@ -272,10 +276,10 @@ app.model({
         }
       }
       if (lat && lng){
-        events = townHallUtils.filterForLocalEvents(events, state.divisions, lat, lng);
+        eventsArr = townHallUtils.filterForLocalEvents(eventsArr, state.divisions, lat, lng);
         // Only return (at most) the first three. Showing more than that could be overwhelming.
         return {
-          localEvents: events.slice(0,3)
+          localEvents: eventsArr.slice(0,3)
         };
       } else {
         // we don't have enough data to determine their location
