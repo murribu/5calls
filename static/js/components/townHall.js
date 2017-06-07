@@ -2,14 +2,12 @@ const html = require('choo/html');
 const t = require('../utils/translation');
 
 let renderLink = (e) => {
-  let linkExists = !!e.link;
-  if (linkExists){
+  if (e.link){
     return html`<li><a href="${e.link}" target="_new">${t("townhall.moreInfo")}</a></li>`;
   }
 };
 let renderNotes = (e) => {
-  let notesExist = !!e.Notes;
-  if (notesExist){
+  if (e.Notes){
     let ret = html`<li></li>`;
     ret.innerHTML = e.Notes;
     return ret;
@@ -17,7 +15,7 @@ let renderNotes = (e) => {
 };
 
 module.exports = (state) => {
-  if (state.localEvents && state.localEvents.length > 0){
+  if (state.localEvents && state.localEvents.length > 0) {
     return html`
       <div class="town-hall">
         <h2>${t("townhall.findNearYou")}</h2>

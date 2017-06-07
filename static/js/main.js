@@ -134,7 +134,7 @@ app.model({
     locationFetchType: cachedLocationFetchType,
     contactIndices: {},
     completedIssues: completedIssues,
-    localEvents: {},
+    localEvents: [],
     divisions: {},
  
     showFieldOfficeNumbers: false,
@@ -145,7 +145,7 @@ app.model({
   reducers: {
     receiveActiveIssues: (state, data) => {
       const response = JSON.parse(data);
-      let divisions = townHallUtils.parseCivicData(response.divisions);
+      const divisions = townHallUtils.parseCivicData(response.divisions);
       return {
         activeIssues: response.issues,
         splitDistrict: response.splitDistrict,
@@ -266,8 +266,10 @@ app.model({
       if (cachedGeo != ''){
         // lat/long
         let geo = cachedGeo.replace(new RegExp(/\]|\[|"/, 'g'),'');
-        lat = geo.split(",")[0];
-        lng = geo.split(",")[1];
+        if (geo.length == 2) {
+          lat = geo.split(",")[0];
+          lng = geo.split(",")[1];
+        }
       }
       if (lat && lng){
         events = townHallUtils.filterForLocalEvents(events, state.divisions, lat, lng);
@@ -275,7 +277,7 @@ app.model({
         return {
           localEvents: events.slice(0,3)
         };
-      }else{
+      } else {
         // we don't have enough data to determine their location
         return {
           localEvents: []
@@ -295,7 +297,7 @@ app.model({
       http(townHallUrl, (err, res, body) => {
         if (res.statusCode == 200) {
           send('receiveTownHallData', body, done);
-        }else{
+        } else {
           send('receiveTownHallDataError', body, done);
         }
       });
