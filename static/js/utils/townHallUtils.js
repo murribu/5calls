@@ -88,7 +88,7 @@ let mapDistanceAndDistrict = (lat, lng) => {
   return (e) => {
     e.distance = calculateDistance(lat, lng, parseFloat(e.lat), parseFloat(e.lng));
     if (!e.stateAb){
-      e.stateAb = Object.keys(stateAbbrs).find((v) => { return stateAbbrs[v] === e.State; });
+      e.stateAb = Object.keys(stateAbbrs).find((v) => { return stateAbbrs[v] === e.State });
     }
     // This is to clean up 'District' data.
     // All of these values ('VA-02', 'VA-2', '02', '2') should map to 'VA-02' (if e.stateAb == 'VA')
