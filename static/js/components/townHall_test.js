@@ -2,7 +2,8 @@ const townHall = require('./townHall.js');
 const townHallUtils = require('../utils/townHallUtils.js');
 const chai = require('chai');
 const expect = chai.expect;
-const localEvents = require('./townHall_test_data.json');
+const testData = require('./townHall_test_data.js');
+const localEvents = testData.localEvents;
 
 describe('townHall component', () => {
   describe('eventList', () => {

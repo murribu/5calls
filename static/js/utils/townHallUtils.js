@@ -84,19 +84,16 @@ let calculateDistance = (lat1, lon1, lat2, lon2) => {
 let deg2rad = (deg) => {
   return deg * (Math.PI/180);
 };
-let getKeyByValue = (obj, val) => {
-  for( var prop in obj ) {
-    if( obj.hasOwnProperty( prop ) ) {
-      if( obj[ prop ] === val )
-        return prop;
-    }
-  }
-};
 let mapDistanceAndDistrict = (lat, lng) => {
   return (e) => {
     e.distance = calculateDistance(lat, lng, parseFloat(e.lat), parseFloat(e.lng));
     if (!e.stateAb){
-      e.stateAb = getKeyByValue(stateAbbrs, e.State);
+      let abbrs = Object.keys(stateAbbrs).filter(s => { return e.State == stateAbbrs[s] });
+      if (abbrs.length > 0) {
+        e.stateAb = abbrs[0];
+      } else {
+        e.stateAb = '';
+      }
     }
     // This is to clean up 'District' data.
     // All of these values ('VA-02', 'VA-2', '02', '2') should map to 'VA-02' (if e.stateAb == 'VA')
